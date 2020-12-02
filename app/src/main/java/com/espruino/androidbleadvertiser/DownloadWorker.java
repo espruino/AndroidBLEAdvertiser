@@ -7,9 +7,11 @@ import android.bluetooth.le.AdvertiseData;
 import android.bluetooth.le.AdvertiseSettings;
 import android.bluetooth.le.BluetoothLeAdvertiser;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -97,7 +99,10 @@ public class DownloadWorker extends Worker {
                 mAdvertiseCallback);
 
         // Indicate whether the work finished successfully with the Result
-        return Result.success();
+        Data output = new Data.Builder()
+                .putString("result", foundData)
+                .build();
+        return Result.success(output);
     }
 
     /*
